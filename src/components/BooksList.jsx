@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAllBooks } from "../api/books.api"
-import { BookCard } from "./BookCard";
+import { BookCard, BookCardAdmin } from "./BookCard";
 
 export function BookList() {
     const [books, setBooks] = useState([]);
@@ -17,8 +17,11 @@ export function BookList() {
 
     return (
         <div>
-            {books.map(book => (
-                BookCard(book = { book })
+            {books.map((book) => (
+                <BookCardAdmin key={book.id} book={book}/>
+            ))}
+            {books.map((book) => (
+                <BookCard key={book.id} book={book}/>
             ))}
         </div>
     )

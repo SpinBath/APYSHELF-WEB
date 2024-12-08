@@ -1,0 +1,15 @@
+.div-account{
+    display: grid; 
+    grid-auto-columns: 1fr; 
+    grid-template-rows: auto 1fr auto; 
+    gap: 0px 0px; 
+  }
+
+#btm-account {
+    background-color: #162c34;
+
+}
+
+#btm-account a{
+    color: white;
+}

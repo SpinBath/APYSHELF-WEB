@@ -11,3 +11,7 @@ export const getAllBooks = () => {
 export const createBooks = (books) => {
     return booksApi.post('/', books)
 }
+
+export const deleteBook = (id) => {
+    return booksApi.delete(`/${id}/`)
+}

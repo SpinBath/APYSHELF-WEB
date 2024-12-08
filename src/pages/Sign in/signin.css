@@ -1,0 +1,62 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.signin-container {
+    height: 100vh;
+    background-color: #162c34;
+    align-content: center;
+}
+
+.div-signin {
+    background-color: #ffffff;
+    margin: auto;
+    width: 500px;
+    height: 550px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.signin-container h1{
+    font-style: italic;
+    font-size: 40px;
+    margin-top: -10px;
+    margin-bottom: 60px;
+}
+
+.signin-container input{
+    width: 85%;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+}
+.signin-container #img-logo{
+    width: 150px;
+    height: 150px;
+}
+
+.signin-container #btn-login{
+     border-radius: 7px;
+     font-size: 23px;
+     background-color: #162c34;
+     width: 90%;
+     color: #ffffff;
+}
+
+.signin-container #p-createaccount{
+    height: 40px;
+    font-size: 17px;
+    font-weight: bold;
+    align-content: center;
+}
+
+.signin-container #p-createaccount a{
+    
+    color: #162c34;
+    text-decoration: none;
+}

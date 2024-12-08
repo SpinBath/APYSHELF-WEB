@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    text-align: center;
+
+}
+
+.left-div {
+
+    height: 100vh;
+    color: #162c34;
+    background-color: #ffffff;
+    align-content: center;
+    justify-content: center;
+    font-style: italic;
+
+}
+
+#img-logo {
+    height: 18vw;
+}
+
+#h1-logo {
+
+    font-size: 4vw;
+    font-weight: bold;
+}
+#p-info-left {
+    font-size: 17px;
+}
+
+
+
+.right-div {
+
+    height: 100vh;
+    color: #ffffff;
+    background-color: #162c34;
+    align-content: center;
+    justify-content: center;
+
+}
+
+.div-buttons {
+    margin: auto;
+    width: 70%;
+    line-height: 60px;
+}
+
+#h1-title {
+    font-size: 3.5vw;
+}
+
+#p-info-right {
+    font-size: 20px;
+    text-align: center;
+    align-content: center;
+    height: 150px;
+    padding-bottom: 50px;
+}
+
+button {
+    font-size: large;
+    font-weight: 700;
+    height: 50px;
+    width: 100%;
+}
+
+#btn-signin {
+    background-color: #ffffff;
+    color: #162c34;
+    border-radius: 7px;
+}
+
+#btn-createaccount {
+    background-color: #162c34;
+    color: #ffffff;
+    border: 4px #ffffff solid;
+    border-radius: 7px;
+}

@@ -1,0 +1,55 @@
+#bookCard {
+    border-radius: 15px;
+    border: 3.5px solid #162c34;
+    width: 800px;
+    height: 250px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+#divImageBookCard {
+    border-radius: 11px;
+    height: 100%;
+    background-color: #162c34;
+    align-content: center;
+    text-align: center;
+}
+
+#divImageBookCard img {
+    height: 85%;
+    width: 80%;
+    background-color: red;
+}
+
+#divInfoBookCard {
+    display: grid;
+    grid-template-rows: 80% 20%;
+    height: 100%;
+    padding-left: 30px;
+}
+
+
+
+#ptitlebook {
+    color: #162c34;
+    font-size: 35px;
+    font-weight: bolder;
+    padding-top: 15px;
+}
+
+#pgenrebook {
+    font-size: 15px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+#divInfoBookCard button {
+
+    background-color: #162c34;
+    color: white;
+    border-radius: 8px;
+    height: 40px;
+    width: 65%;
+    margin-right: 30px;
+}

@@ -1,31 +1,32 @@
 import { Link } from "react-router-dom"
-import "./styles/Navigation-styles.css"
 
-export function Navigation() {
+import styles from "./styles/Navigation.module.css"
+
+export function Navigation({ btmHome, btmbooks, btmLoans, btmAccount }) {
     return (
-        <div className="div-navigation">
-            <button id="btm-home">
+        <div className={styles.divnavigation}>
+            <button className={btmHome}>
                 <Link to="/home">
                     <h2>
                         HOME
                     </h2>
                 </Link>
             </button>
-            <button id="btm-books">
+            <button className={btmbooks}>
                 <Link to="/books">
                     <h2>
                         BOOKS
                     </h2>
                 </Link>
             </button>
-            <button id="btm-loans">
+            <button className={btmLoans}>
                 <Link to="/loans">
                     <h2>
                         LOANS
                     </h2>
                 </Link>
             </button>
-            <button id="btm-account">
+            <button className={btmAccount}>
                 <Link to="/account">
                     <h2>
                         ACCOUNT

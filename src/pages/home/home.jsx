@@ -5,7 +5,7 @@ import "./home.css";
 
 const HomePage = () => {
     return (
-        <div class="div-account">
+        <div class="div-home">
             <Navigation />
             <div>
 

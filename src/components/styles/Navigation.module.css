@@ -1,0 +1,22 @@
+.divnavigation {
+    background-color: #dedede;
+    color: #162c34;
+    height: 60px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+
+.divnavigation button {
+    background-color: #dedede;
+    border: 0;
+    width: 210px;
+    height: 100%;
+    font-size: 13px;
+}
+
+.divnavigation a {
+    color: #162c34;
+    text-decoration: none;
+}
+

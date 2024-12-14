@@ -1,17 +1,18 @@
 import axios from 'axios'
 
-const userApi = axios.create({
-    baseURL: 'http://localhost:8000/api/users/'
+const createUserUrl = axios.create({
+    baseURL: 'http://127.0.0.1:8000/signup'
 })
 
-export const getAllUsers = () => {
-    return userApi.get('/')
-}
+const loginUserUrl = axios.create({
+    baseURL: 'http://127.0.0.1:8000/login'
+})
 
 export const createUser = (user) => {
-    return userApi.post('/', user)
+    return createUserUrl.post('', user)
 }
 
-export const deleteUser = (id) => {
-    return userApi.delete(`/${id}/`)
+export const loginUser = (user) => {
+    return loginUserUrl.post('', user)
 }
+

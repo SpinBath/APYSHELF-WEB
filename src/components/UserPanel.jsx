@@ -1,6 +1,9 @@
+import axios from 'axios';
+
 import { useNavigate } from "react-router-dom"
 import { useForm } from 'react-hook-form'
-import { createUser } from '../api/user.api'
+import { createUser, loginUser } from '../api/user.api'
+
 import React, { useState } from 'react';
 
 
@@ -15,24 +18,21 @@ export function SinginPanel() {
 
         try {
 
-            const res = await createUser(data);
+            const res = await loginUser(data);
+            console.log(res)
 
-            if (res.success) {
+            if (res.status = 200) {
                 navigate("/home");
             }
-            
+
         } catch (error) {
 
-            if (error.response && error.response.status === 400) {
-                const errorMessage = error.response.data.email ? error.response.data.email[0] : "Error al registrar el usuario.";
-                const errorMessage2 = error.response.data.national_id ? error.response.data.national_id[0] : "Error al registrar el usuario.";
-
-
-                console.log(errorMessage);
-                console.log(errorMessage2);
-
+            if (axios.isAxiosError(error)) {
+                console.error('Error en Axios:', error.message);
+                console.error('Código de estado:', error.response?.status); // 404
+                console.error('URL:', error.config.url);
             } else {
-                console.log("Hubo un error al procesar la solicitud.");
+                console.error('Error desconocido:', error);
             }
         }
 
@@ -45,8 +45,13 @@ export function SinginPanel() {
             <a href="/"><img id="img-logo" src="../src/img/apyshelf-logo.png" /></a>
             <h1>APYSHELF</h1>
             <form onSubmit={onSubmit}>
-                <input type="text" placeholder="Gmail"></input>
-                <input type="text" placeholder="Password"></input>
+                <div class="div-inputs">
+                    {errors.email && <p class="error">{errors.email.message}</p>}
+                    <input type="email" id="email" placeholder="Email" {...register("email")} required />
+                </div>
+                <div class="div-inputs">
+                    <input type="password" id="password" placeholder="Password" {...register("password")} required />
+                </div>
                 <button id="btn-login">LOGIN</button>
             </form>
             <p id="p-createaccount"><a href="/signon">Create account</a></p>
@@ -55,25 +60,14 @@ export function SinginPanel() {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export function SingonPanel() {
 
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, setError, formState: { errors } } = useForm()
+
+    const handlePhoneInput = (event) => {
+        event.target.value = event.target.value.replace(/[^0-9]/g, '');
+    };
 
     const onSubmit = handleSubmit(async data => {
 
@@ -81,23 +75,56 @@ export function SingonPanel() {
 
             const res = await createUser(data);
 
+            console.log(res)
+
             if (res.success) {
-                navigate("/home");
+                navigate("/signin");
             }
-            
+
         } catch (error) {
 
-            if (error.response && error.response.status === 400) {
-                const errorMessage = error.response.data.email ? error.response.data.email[0] : "Error al registrar el usuario.";
-                const errorMessage2 = error.response.data.national_id ? error.response.data.national_id[0] : "Error al registrar el usuario.";
+            if (error.response) {
+
+                if (error.response.status === 404) {
+                    console.error('La ruta no fue encontrada (404).');
+
+                } else {
+                    console.error('Error del servidor:', error.response.status, error.response.data);
+
+                    if (error.response.data.email) {
+                        setError("email", {
+                            type: "server",
+                            message: "already exists",
+                        });
+
+                        const emailInput = document.getElementById('email')
+                        emailInput.style.borderColor = 'red'
+
+                    }
 
 
-                console.log(errorMessage);
-                console.log(errorMessage2);
+                    if (error.response.data.national_id) {
+                        setError("national_id", {
+                            type: "server",
+                            message: "already exists",
+                        });
+
+                        const national_id = document.getElementById('national_id')
+                        national_id.style.borderColor = 'red'
+
+                    }
+
+
+                }
+
+            } else if (error.request) {
+                console.error('No se recibió respuesta del servidor:', error.request);
 
             } else {
-                console.log("Hubo un error al procesar la solicitud.");
+                // Algo más causó el error
+                console.error('Error al configurar la solicitud:', error.message);
             }
+
         }
 
     });
@@ -109,25 +136,28 @@ export function SingonPanel() {
 
             <form onSubmit={onSubmit}>
 
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <div class="div-inputs">
+                    {errors.email && <p class="error">{errors.email.message}</p>}
+                    <input type="email" id="email" placeholder="Email" {...register("email")} required />
+                </div>
+                <div class="div-inputs">
+                    <input type="password" id="password" placeholder="Password" {...register("password")} required />
+                </div>
 
-                <input type="email" id="email" placeholder="Email" {...register("email", { required: "Email is required" })} />
-                {errors.email && <p>{errors.email.message}</p>} {/* Mensaje de error */}
+                <div class="div-inputs">
+                    <input type="name" id="name" placeholder="Name" {...register("name")} required />
 
-                <input type="password" id="password" placeholder="Password" {...register("password", { required: "Password is required" })} />
-                {errors.password && <p>{errors.password.message}</p>} {/* Mensaje de error */}
+                    <input type="middlename" id="middlename" placeholder="Middle Name" {...register("middlename")} required />
+                </div>
 
-                <input type="first_name" id="first_name" placeholder="Name" {...register("first_name", { required: "first_name is required" })} />
-                {errors.first_name && <p>{errors.first_name.message}</p>} {/* Mensaje de error */}
-
-                <input type="middle_name" id="middle_name" placeholder="Middle Name" {...register("middle_name", { required: "middle_name is required" })} />
-                {errors.middle_name && <p>{errors.middle_name.message}</p>} {/* Mensaje de error */}
-
-                <input type="national_id" id="national_id" placeholder="DNI" {...register("national_id", { required: "national_id is required" })} />
-                {errors.national_id && <p>{errors.national_id.message}</p>} {/* Mensaje de error */}
-
-                <input type="phone" id="phone" placeholder="Phone" {...register("phone", { required: "phone is required" })} />
-                {errors.phone && <p>{errors.phone.message}</p>} {/* Mensaje de error */}
+                <div class="div-inputs">
+                    {errors.national_id && <p class="error">{errors.national_id.message}</p>}
+                    <input type="national_id" id="national_id" placeholder="DNI" {...register("national_id")} required />
+                </div>
+                <div class="div-inputs">
+                    {errors.phone && <p class="error">{errors.phone.message}</p>}
+                    <input type="tel" id="phone" placeholder="Phone" {...register("phone", { pattern: { value: /^[6-7]\d{8}$|^[8-9]\d{8}$/, message: "Invalid Phone" } })} onInput={handlePhoneInput} required />
+                </div>
 
                 <button id="btn-login" type="submit"> Create account </button>
 
@@ -138,6 +168,9 @@ export function SingonPanel() {
         </div>
     );
 
+
+
 }
+
 
 

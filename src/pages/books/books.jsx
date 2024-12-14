@@ -1,18 +1,14 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { Navigation } from "../../components/Navigation";
-import "./books.css";
+import { BookList } from "../../components/BooksList";
+import styles from "./books.module.css";
+
 
 const BooksPage = () => {
     return (
-        <div class="div-account">
-            <Navigation />
-            <div>
-
-            </div>
-            <div>
-                
-            </div>
+        <div className={styles.divbooks}>
+            <Navigation btmbooks={styles.btmbooks} />
+            <BookList />
         </div>
 
     );

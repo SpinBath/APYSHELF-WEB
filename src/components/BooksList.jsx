@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react"
 import { getAllBooks } from "../api/books.api"
-import { BookCard, BookCardAdmin } from "./BookCard";
+import { BookCard } from "./BookCard";
 import "./styles/BookList.css"
 
 
 export function BookList() {
     
     const [books, setBooks] = useState([]);
-
-    const [isActive, setIsActive] = useState(false);
-
 
     useEffect(() => {
         async function loadBooks() {
@@ -20,6 +17,8 @@ export function BookList() {
 
     }, []);
 
+
+    const [isActive, setIsActive] = useState(false);
 
     const handleToggle = () => {
         setIsActive(!isActive);
@@ -51,3 +50,4 @@ export function BookList() {
         </div>
     )
 }
+

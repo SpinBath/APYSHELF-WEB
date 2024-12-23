@@ -1,18 +1,19 @@
 import React from "react";
 import { Navigation } from "../../components/Navigation";
-import { BookList } from "../../components/BooksList";
-
+import { LoanRequest } from "../../components/LoanRequest";
 import styles from "./books.module.css";
 
 
-const BooksPage = () => {
+const RequestBook = () => {
     return (
         <div className={styles.divbooks}>
             <Navigation btmbooks={styles.btmbooks} />
-            <BookList />
+            <LoanRequest />
+            <footer></footer>
+
         </div>
 
     );
 };
 
-export default BooksPage;
+export default RequestBook;

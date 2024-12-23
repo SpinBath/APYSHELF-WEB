@@ -1,19 +1,16 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { Navigation } from "../../components/Navigation";
-import "./account.css";
+import { AccoutInfo } from "../../components/UserPanel";
+import styles from "./account.module.css";
 
 const AccountPage = () => {
     return (
-        <div class="div-account">
-            <Navigation />
-            <div>
-
-            </div>
-            <div>
-
-            </div>
+        <div className={styles.divaccount}>
+            <Navigation btmaccount={styles.btmaccount} />
+            <AccoutInfo />
+            <footer></footer>
         </div>
+        
 
     );
 };

@@ -2,9 +2,12 @@ import axios from 'axios';
 
 import { useNavigate } from "react-router-dom"
 import { useForm } from 'react-hook-form'
-import { createUser, loginUser } from '../api/user.api'
-
+import { useAuth } from '../AuthContext';
+import { createUser, loginUser, infoUser } from '../api/user.api'
 import React, { useState } from 'react';
+
+import "./styles/UserPanel.css"
+
 
 
 
@@ -12,16 +15,23 @@ import React, { useState } from 'react';
 export function SinginPanel() {
 
     const navigate = useNavigate();
+    const { login } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm()
+
+
+
 
     const onSubmit = handleSubmit(async data => {
 
         try {
 
             const res = await loginUser(data);
-            console.log(res)
 
-            if (res.status = 200) {
+            console.log('Token obtenido:', res.data.token);
+            localStorage.setItem('token', res.data.token);
+
+            if (res.status === 200) {
+                login(res.data.token);
                 navigate("/home");
             }
 
@@ -45,11 +55,11 @@ export function SinginPanel() {
             <a href="/"><img id="img-logo" src="../src/img/apyshelf-logo.png" /></a>
             <h1>APYSHELF</h1>
             <form onSubmit={onSubmit}>
-                <div class="div-inputs">
-                    {errors.email && <p class="error">{errors.email.message}</p>}
+                <div className="div-inputs">
+                    {errors.email && <p className="error">{errors.email.message}</p>}
                     <input type="email" id="email" placeholder="Email" {...register("email")} required />
                 </div>
-                <div class="div-inputs">
+                <div className="div-inputs">
                     <input type="password" id="password" placeholder="Password" {...register("password")} required />
                 </div>
                 <button id="btn-login">LOGIN</button>
@@ -63,19 +73,14 @@ export function SinginPanel() {
 export function SingonPanel() {
 
     const navigate = useNavigate();
+    
     const { register, handleSubmit, setError, formState: { errors } } = useForm()
-
-    const handlePhoneInput = (event) => {
-        event.target.value = event.target.value.replace(/[^0-9]/g, '');
-    };
 
     const onSubmit = handleSubmit(async data => {
 
         try {
 
             const res = await createUser(data);
-
-            console.log(res)
 
             if (res.success) {
                 navigate("/signin");
@@ -129,6 +134,10 @@ export function SingonPanel() {
 
     });
 
+    const handlePhoneInput = (event) => {
+        event.target.value = event.target.value.replace(/[^0-9]/g, '');
+    };
+
     return (
         <div className="div-signon">
             <a href="/"><img id="img-logo" src="../src/img/apyshelf-logo.png" /></a>
@@ -136,26 +145,26 @@ export function SingonPanel() {
 
             <form onSubmit={onSubmit}>
 
-                <div class="div-inputs">
-                    {errors.email && <p class="error">{errors.email.message}</p>}
+                <div className="div-inputs">
+                    {errors.email && <p className="error">{errors.email.message}</p>}
                     <input type="email" id="email" placeholder="Email" {...register("email")} required />
                 </div>
-                <div class="div-inputs">
+                <div className="div-inputs">
                     <input type="password" id="password" placeholder="Password" {...register("password")} required />
                 </div>
 
-                <div class="div-inputs">
+                <div className="div-inputs">
                     <input type="name" id="name" placeholder="Name" {...register("name")} required />
 
                     <input type="middlename" id="middlename" placeholder="Middle Name" {...register("middlename")} required />
                 </div>
 
-                <div class="div-inputs">
-                    {errors.national_id && <p class="error">{errors.national_id.message}</p>}
+                <div className="div-inputs">
+                    {errors.national_id && <p className="error">{errors.national_id.message}</p>}
                     <input type="national_id" id="national_id" placeholder="DNI" {...register("national_id")} required />
                 </div>
-                <div class="div-inputs">
-                    {errors.phone && <p class="error">{errors.phone.message}</p>}
+                <div className="div-inputs">
+                    {errors.phone && <p className="error">{errors.phone.message}</p>}
                     <input type="tel" id="phone" placeholder="Phone" {...register("phone", { pattern: { value: /^[6-7]\d{8}$|^[8-9]\d{8}$/, message: "Invalid Phone" } })} onInput={handlePhoneInput} required />
                 </div>
 
@@ -170,6 +179,95 @@ export function SingonPanel() {
 
 
 
+}
+
+
+export function AccoutInfo() {
+
+
+    const [user, setUsers] = useState([]);
+    const { logout } = useAuth();
+
+    useState(() => {
+
+        async function loadUser() {
+            const user = await infoUser(localStorage.getItem('token'));
+            setUsers(user.data)
+        }
+
+        loadUser();
+
+    }, []);
+
+
+
+
+    return (
+
+        <div id="userInfo" user={user}>
+            <div id="divUserImage">
+                <div id="divinfo">
+                    <img id="imgUserPhoto">{user.photo}</img><br />
+                    <button id="btnEditProfile">EDIT PROFILE</button><br />
+                    <button id="btnLogout" onClick={logout} >logout</button><br />
+                </div>
+            </div>
+
+            <div id="divUserInfo">
+                <p id="pUserName">{user.name} {user.middlename} {user.lastname}</p>
+                <p id="pUserEmail">{user.email}</p>
+                <p id="pUserNationalId">DNI: {user.national_id}</p>
+                <p id="pUserPhone">TLF: {user.phone}</p>
+                <p id="pUserAddress">ADR: </p>
+            </div>
+        </div>
+
+
+    );
+}
+
+export function EditAccoutInfo() {
+
+
+    const [user, setUsers] = useState([]);
+    const { logout } = useAuth();
+
+    useState(() => {
+
+        async function loadUser() {
+            const user = await infoUser(localStorage.getItem('token'));
+            setUsers(user.data)
+        }
+
+        loadUser();
+
+    }, []);
+
+
+
+
+    return (
+
+        <div id="userInfo" user={user}>
+            <div id="divUserImage">
+                <div id="divinfo">
+                    <img id="imgUserPhoto">{user.photo}</img><br />
+                    <button id="btnEditProfile">EDIT PROFILE</button><br />
+                    <button id="btnLogout" onClick={logout} >logout</button><br />
+                </div>
+            </div>
+
+            <div id="divUserInfo">
+                <p id="pUserName">{user.name} {user.middlename} {user.lastname}</p>
+                <p id="pUserEmail">{user.email}</p>
+                <p id="pUserNationalId">DNI: {user.national_id}</p>
+                <p id="pUserPhone">TLF: {user.phone}</p>
+                <p id="pUserAddress">ADR: </p>
+            </div>
+        </div>
+
+
+    );
 }
 
 

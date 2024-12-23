@@ -5,7 +5,7 @@ import "./signin.css";
 
 const Signin = () => {
   return (
-    <div class="signin-container">
+    <div className="signin-container">
         <SinginPanel />
     </div>
   );

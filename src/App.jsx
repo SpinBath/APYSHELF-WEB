@@ -1,37 +1,43 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Router, Navigate } from 'react-router-dom'
 import { BooksFormPage } from './pages/BooksFormPage'
-import { Navigation } from './components/Navigation'
-
+import { AuthProvider } from './AuthContext'
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/main/main'
 
 import Signin from './pages/Sign in/signin'
 import Signon from './pages/Sign on/signon'
 import HomePage from './pages/home/home'
-import BooksPage from './pages/books/books'
+
+import { BookRoutes } from './pages/books/BookRoutes';
+
+
 import LoansPage from './pages/loans/loans'
 import AccountPage from './pages/account/account'
 
 
 
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signon" element={<Signon />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/books" element={<BooksPage />} />
-        <Route path="/loans" element={<LoansPage />} />
-        <Route path="/account" element={<AccountPage />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signon" element={<Signon />} />
+
+          {/* Protected Routes */}
+          <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+          <Route path="/*" element={<BookRoutes />} />
+          <Route path="/loans" element={<ProtectedRoute><LoansPage /></ProtectedRoute>} />
+          <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
 
 
-        <Route path="/signout" element={<Home />} />
-        <Route path="/books" element={<BooksPage />} />
-        <Route path="/books/:id" element={<BooksPage />} />
-        <Route path="/books-create" element={<BooksFormPage />} />
-      </Routes>
-    </BrowserRouter>
+
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider >
   );
 }
 

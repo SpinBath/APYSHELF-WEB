@@ -2,10 +2,10 @@ import { Link } from "react-router-dom"
 
 import styles from "./styles/Navigation.module.css"
 
-export function Navigation({ btmHome, btmbooks, btmLoans, btmAccount }) {
+export function Navigation({ btmhome, btmbooks, btmloans, btmaccount }) {
     return (
         <div className={styles.divnavigation}>
-            <button className={btmHome}>
+            <button className={btmhome}>
                 <Link to="/home">
                     <h2>
                         HOME
@@ -19,14 +19,14 @@ export function Navigation({ btmHome, btmbooks, btmLoans, btmAccount }) {
                     </h2>
                 </Link>
             </button>
-            <button className={btmLoans}>
+            <button className={btmloans}>
                 <Link to="/loans">
                     <h2>
                         LOANS
                     </h2>
                 </Link>
             </button>
-            <button className={btmAccount}>
+            <button className={btmaccount}>
                 <Link to="/account">
                     <h2>
                         ACCOUNT

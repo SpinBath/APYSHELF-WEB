@@ -1,18 +1,11 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { Navigation } from "../../components/Navigation";
-import "./home.css";
+import styles from "./home.module.css";
 
 const HomePage = () => {
     return (
-        <div class="div-home">
-            <Navigation />
-            <div>
-
-            </div>
-            <div>
-                
-            </div>
+        <div className={styles.divhome}>
+            <Navigation btmhome={styles.btmhome} />
         </div>
 
     );

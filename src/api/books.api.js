@@ -8,6 +8,10 @@ export const getAllBooks = () => {
     return booksApi.get('/')
 }
 
+export const getBook = (id) => {
+    return booksApi.get(`/${id}`);
+}
+
 export const createBooks = (books) => {
     return booksApi.post('/', books)
 }

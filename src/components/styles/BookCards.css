@@ -68,13 +68,27 @@
 
 }
 
-#bookCard #divbutton{
+#bookCard a {
+    text-decoration: none;
+    color: white;
+}
+
+#bookCard #divInfoBookCard button:hover a {
+    color: #162c34;
+}
+
+#bookCard a {
+    text-decoration: none;
+    color: white;
+}
+
+#bookCard #divbutton {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-#bookCard #icon{
+#bookCard #icon {
     margin: 2px 13px 0px;
     border: 0px #00ff88;
     border-radius: 90px;
@@ -82,11 +96,3 @@
     height: 10px;
     background-color: #00ff88;
 }
-
-
-
-
-
-
-
-/*  Book Request */

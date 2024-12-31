@@ -2,7 +2,7 @@ import { useNavigate, Link, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 
-import { getBook, deleteBook } from '../api/books.api'
+import { getBook, editBook ,deleteBook } from '../api/books.api'
 import { createLoan } from "../api/loans.api"
 
 
@@ -52,7 +52,7 @@ export function BookCard({ book }) {
                     <p id="pdescriptionbook">{book.description}</p>
                 </div>
                 <div id="divbutton">
-                    <button><Link to={`/books-request/${book.id}`}>Request loan</Link></button>Available <div id="icon" />
+                    <button><Link to={`/books-request/${book.id}`}>Request loan</Link></button>{book.status} <div id="icon" />
                 </div>
             </div>
         </div >
@@ -63,14 +63,14 @@ export function BookCardRequest() {
 
     const { register, handleSubmit, setValue, setError, watch, formState: { errors } } = useForm();
     const { id } = useParams();
+    const navigate = useNavigate();
+
     const [book, setData] = useState(null);
 
     const borrowDate = watch("borrow_date");
-
-
-
     const today = new Date().toISOString().split('T')[0];
     const minDate = new Date();
+
 
 
     useEffect(() => {
@@ -100,9 +100,6 @@ export function BookCardRequest() {
                 }
             }
         }
-
-
-
         fetchData();
     }, [id]);
 
@@ -112,11 +109,30 @@ export function BookCardRequest() {
     }
 
 
-
-
     const onSubmit = handleSubmit(async data => {
-        console.log(data);
-        createLoan(data)
+
+        try {
+            // Crear préstamo
+            const res = await createLoan(data);
+    
+            // Validar el estado de la respuesta
+            if (res.status === 201) {
+                const updatedData = {
+                    status: 'ON_HOLD'
+                };
+    
+                // Editar el libro
+                const ed = await editBook(book.id, updatedData);
+                console.log('Libro actualizado:', ed.data);
+    
+                // Navegar después del éxito
+                navigate("/loans");
+            } else {
+                console.error('Error al crear el préstamo: Estado incorrecto', res.status);
+            }
+        } catch (error) {
+            console.error('Error durante la creación o actualización:', error);
+        }
     });
 
 
@@ -124,6 +140,7 @@ export function BookCardRequest() {
         <form id="bookCardRequest" onSubmit={onSubmit}>
             <div id="divinfo">
                 <input {...register("book")} defaultValue={book.id} style={{ display: "none" }} />
+                <input {...register("book_title")} defaultValue={book.title} style={{ display: "none" }} />
                 <p id="ptitlebook">{book.title}</p>
                 <p id="pgenrebook">{book.genre}, {book.date}</p>
                 <p id="pauthorbook">{book.author}</p>

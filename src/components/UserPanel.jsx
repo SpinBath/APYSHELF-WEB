@@ -32,7 +32,7 @@ export function SinginPanel() {
 
             if (res.status === 200) {
                 login(res.data.token);
-                navigate("/home");
+                navigate("/");
             }
 
         } catch (error) {

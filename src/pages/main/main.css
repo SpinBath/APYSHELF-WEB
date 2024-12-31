@@ -11,19 +11,19 @@
     gap: 0px 0px;
     grid-auto-flow: row;
     text-align: center;
+    
 
 }
 
 .left-div {
-
     height: 100vh;
     color: #162c34;
     background-color: #ffffff;
     align-content: center;
     justify-content: center;
     font-style: italic;
-
 }
+
 
 #img-logo {
     height: 18vw;
@@ -34,21 +34,18 @@
     font-size: 4vw;
     font-weight: bold;
 }
+
 #p-info-left {
     font-size: 17px;
 }
 
-
-
 .right-div {
-
-    height: 100vh;
     color: #ffffff;
     background-color: #162c34;
     align-content: center;
     justify-content: center;
-
 }
+
 
 .div-buttons {
     margin: auto;

@@ -1,3 +1,7 @@
-.loanList{
-    padding-top: 100px;
+.loanList {
+    width: 900px;
+    margin: 100px auto;
+    text-align: center;
+    border-bottom: 1px solid #162c34;
+    border-top: 1px solid #162c34;
 }

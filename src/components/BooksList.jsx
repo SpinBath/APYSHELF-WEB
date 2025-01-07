@@ -11,6 +11,7 @@ export function BookList() {
     useEffect(() => {
         async function loadBooks() {
             const res = await getAllBooks();
+            console.log(res)
             setBooks(res.data.results);
         }
         loadBooks();

@@ -48,16 +48,31 @@
     font-weight: bold;
 }
 
+#bookCard #pdescriptionbook {
+    font-size: 14px;
+    font-style: italic;
+    margin-top: 10px;
+    padding-right: 20px;
+
+}
+
+#bookCard #divInfoBookCard a {
+    width: 65%;
+    margin-right: 30px;
+}
+
 #bookCard #divInfoBookCard button {
 
     background-color: #162c34;
     color: white;
     border-radius: 8px;
     height: 40px;
-    width: 65%;
     margin-right: 30px;
     transition: ease-in 0.1s;
+    cursor: pointer;
+
 }
+
 
 #bookCard #divInfoBookCard button:hover {
 

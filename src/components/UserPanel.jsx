@@ -32,7 +32,7 @@ export function SinginPanel() {
 
             if (res.status === 200) {
                 login(res.data.token);
-                navigate("/");
+                navigate("/account");
             }
 
         } catch (error) {
@@ -73,7 +73,7 @@ export function SinginPanel() {
 export function SingonPanel() {
 
     const navigate = useNavigate();
-    
+
     const { register, handleSubmit, setError, formState: { errors } } = useForm()
 
     const onSubmit = handleSubmit(async data => {
@@ -184,9 +184,14 @@ export function SingonPanel() {
 
 export function AccoutInfo() {
 
-
+    const navigate = useNavigate();
     const [user, setUsers] = useState([]);
     const { logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/main");
+    };
 
     useState(() => {
 
@@ -209,7 +214,7 @@ export function AccoutInfo() {
                 <div id="divinfo">
                     <img id="imgUserPhoto">{user.photo}</img><br />
                     <button id="btnEditProfile">EDIT PROFILE</button><br />
-                    <button id="btnLogout" onClick={logout} >logout</button><br />
+                    <button id="btnLogout" onClick={handleLogout} >logout</button><br />
                 </div>
             </div>
 

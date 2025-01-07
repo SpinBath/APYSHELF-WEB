@@ -2,7 +2,7 @@ import { useNavigate, Link, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 
-import { getBook, editBook ,deleteBook } from '../api/books.api'
+import { getBook, editBook, deleteBook } from '../api/books.api'
 import { createLoan } from "../api/loans.api"
 
 
@@ -38,21 +38,33 @@ export function BookCardAdmin({ book }) {
 
 export function BookCard({ book }) {
 
+
+
     return (
         <div id="bookCard">
 
             <div id="divImageBookCard">
-                <img />
+                <img src="../src/img/book-icon.png" />
             </div>
             <div id="divInfoBookCard">
                 <div id="divinfo">
                     <p id="ptitlebook">{book.title}</p>
                     <p id="pgenrebook">{book.genre}, {book.date}</p>
-                    <p id="pauthorbook">{book.author}</p>
+                    <p id="pauthorbook">- {book.author} -</p>
                     <p id="pdescriptionbook">{book.description}</p>
                 </div>
                 <div id="divbutton">
-                    <button><Link to={`/books-request/${book.id}`}>Request loan</Link></button>{book.status} <div id="icon" />
+                    <Link to={`/books-request/${book.id}`}><button>Request loan</button></Link>{book.status} <div id="icon"
+                        style={{
+                            backgroundColor:
+                                book.status === "Available"
+                                    ? "#4caf50"
+                                    : book.status === "On Hold"
+                                        ? "orange"
+                                        : book.status === "Not Available"
+                                            ? "#ff3c3c"
+                                            : "grey"
+                        }} />
                 </div>
             </div>
         </div >
@@ -114,17 +126,17 @@ export function BookCardRequest() {
         try {
             // Crear préstamo
             const res = await createLoan(data);
-    
+
             // Validar el estado de la respuesta
             if (res.status === 201) {
                 const updatedData = {
-                    status: 'ON_HOLD'
+                    status: "On hold"
                 };
-    
+
                 // Editar el libro
                 const ed = await editBook(book.id, updatedData);
                 console.log('Libro actualizado:', ed.data);
-    
+
                 // Navegar después del éxito
                 navigate("/loans");
             } else {

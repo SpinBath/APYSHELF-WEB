@@ -6,7 +6,7 @@ export function Navigation({ btmhome, btmbooks, btmloans, btmaccount }) {
     return (
         <div className={styles.divnavigation}>
             <button className={btmhome}>
-                <Link to="/">
+                <Link to="/home">
                     <h2>
                         HOME
                     </h2>

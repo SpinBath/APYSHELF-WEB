@@ -1,33 +1,28 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const createUserUrl = axios.create({
-    baseURL: 'http://127.0.0.1:8000/signup'
-})
-
-const loginUserUrl = axios.create({
-    baseURL: 'http://127.0.0.1:8000/login'
-})
-
-const infoUserUrl = axios.create({
-    baseURL: 'http://127.0.0.1:8000/test_token'
-})
+const apiClient = axios.create({
+    baseURL: 'http://127.0.0.1:8000',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
 
 export const createUser = (user) => {
-    return createUserUrl.post('', user)
-}
+    return apiClient.post('/signup', user);
+};
 
 export const loginUser = (user) => {
-    return loginUserUrl.post('', user)
-}
+    return apiClient.post('/login', user);
+};
 
 export const infoUser = (token) => {
-    return infoUserUrl.get('', {
+    return apiClient.get('/test_token', {
         headers: {
             'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json'
-        }
+        },
+    });
+};
 
-    })
-}
-
-
+export const editUser = (id, data) => {
+    return apiClient.patch(`/api/users/${id}/`, data);
+};

@@ -1,29 +1,64 @@
 import { useEffect, useState } from "react"
-import { getAllBooks } from "../api/books.api"
+import { useForm } from 'react-hook-form'
+
+import { getAllBooks, getAvailableBooks, getSearchBook, getSearchBookAvailable } from "../api/books.api"
 import { BookCard } from "./BookCard";
 import "./styles/BookList.css"
 
 
 export function BookList() {
-    
+
     const [books, setBooks] = useState([]);
+    const [isActive, setIsActive] = useState(false);
+    const { register, handleSubmit, watch } = useForm()
+
+    const search = watch("search");
 
     useEffect(() => {
         async function loadBooks() {
-            const res = await getAllBooks();
-            console.log(res)
+            if (isActive) {
+                const res = await getAvailableBooks();
+                setBooks(res.data.results);
+            } else {
+                const res = await getAllBooks();
+                setBooks(res.data.results);
+            }
+        }
+
+        loadBooks();
+    }, [isActive]);
+
+    useEffect(() => {
+        async function fetchBooks() {
+            let res;
+
+            if (search) {
+                if (isActive) {
+                    res = await getSearchBookAvailable(search);
+                } else {
+                    res = await getSearchBook(search);
+                }
+            } else {
+                if (isActive) {
+                    res = await getAvailableBooks();
+                } else {
+                    res = await getAllBooks();
+                }
+            }
+            
             setBooks(res.data.results);
         }
-        loadBooks();
 
-    }, []);
+        fetchBooks();
+    }, [isActive, search]);
 
-
-    const [isActive, setIsActive] = useState(false);
 
     const handleToggle = () => {
-        setIsActive(!isActive);
+        setIsActive((prevState) => !prevState);
     };
+
+
+
 
 
     return (
@@ -32,8 +67,9 @@ export function BookList() {
             <h1 id="titleBookList">EXPLORE OUR LIST OF BOOKS</h1>
 
             <div className="divSearchBooks">
-
-                <input placeholder="Title, Author, Year, Genre" />
+                <form>
+                    <input placeholder="Title, Author, Year, Genre" {...register("search")} />
+                </form>
                 Only available
 
                 <div

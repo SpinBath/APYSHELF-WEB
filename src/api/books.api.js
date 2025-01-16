@@ -4,6 +4,18 @@ const booksApi = axios.create({
     baseURL: 'http://localhost:8000/api/books/'
 })
 
+export const getAvailableBooks = () => {
+    return booksApi.get(`/?status=Available`)
+}
+
+export const getSearchBook = (search) => {
+    return booksApi.get(`/?search=${search}`)
+}
+
+export const getSearchBookAvailable = (search) => {
+    return booksApi.get(`/?search=${search}&status=Available`)
+}
+
 export const getAllBooks = () => {
     return booksApi.get('/')
 }

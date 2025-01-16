@@ -8,10 +8,9 @@ import Signon from './pages/Sign on/signon'
 
 import { BookRoutes } from './pages/books/BookRoutes';
 
-
-import HomePage from './pages/home/home';
 import LoansPage from './pages/loans/loans';
 import AccountPage from './pages/account/account';
+import EditAccountPage from './pages/account/EditAccount';
 
 
 
@@ -39,9 +38,10 @@ function App() {
 
           {/* Protected Routes */}
           <Route path="/*" element={<BookRoutes />} />
-          <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path="/loans" element={<ProtectedRoute><LoansPage /></ProtectedRoute>} />
           <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
+          <Route path="/editaccount" element={<ProtectedRoute><EditAccountPage /></ProtectedRoute>} />
+
 
 
 

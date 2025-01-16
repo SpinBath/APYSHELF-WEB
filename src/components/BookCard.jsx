@@ -2,13 +2,11 @@ import { useNavigate, Link, useParams } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 
+import { infoUser } from "../api/user.api";
 import { getBook, editBook, deleteBook } from '../api/books.api'
 import { createLoan } from "../api/loans.api"
 
-
 import "./styles/BookCards.css"
-
-
 
 
 export function BookCardAdmin({ book }) {
@@ -37,8 +35,6 @@ export function BookCardAdmin({ book }) {
 
 
 export function BookCard({ book }) {
-
-
 
     return (
         <div id="bookCard">
@@ -71,19 +67,33 @@ export function BookCard({ book }) {
     );
 }
 
+
 export function BookCardRequest() {
+
+    const [user, setUsers] = useState([]);
+    const [book, setData] = useState(null);
 
     const { register, handleSubmit, setValue, setError, watch, formState: { errors } } = useForm();
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [book, setData] = useState(null);
 
     const borrowDate = watch("borrow_date");
     const today = new Date().toISOString().split('T')[0];
     const minDate = new Date();
 
+    useEffect(() => {
+        async function loadUser() {
+            try {
+                const userData = await infoUser(localStorage.getItem("token"));
+                setUsers(userData.data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        }
 
+        loadUser();
+    }, []);
 
     useEffect(() => {
         if (borrowDate) {
@@ -97,9 +107,6 @@ export function BookCardRequest() {
 
         }
     }, [borrowDate]);
-
-
-
 
     useEffect(() => {
         async function fetchData() {
@@ -120,24 +127,21 @@ export function BookCardRequest() {
         return <div></div>;
     }
 
-
     const onSubmit = handleSubmit(async data => {
 
         try {
-            // Crear préstamo
             const res = await createLoan(data);
+            const counts = book.orders_count + 1
 
-            // Validar el estado de la respuesta
             if (res.status === 201) {
                 const updatedData = {
+                    orders_count: counts,
                     status: "On hold"
                 };
 
-                // Editar el libro
                 const ed = await editBook(book.id, updatedData);
                 console.log('Libro actualizado:', ed.data);
 
-                // Navegar después del éxito
                 navigate("/loans");
             } else {
                 console.error('Error al crear el préstamo: Estado incorrecto', res.status);
@@ -153,6 +157,7 @@ export function BookCardRequest() {
             <div id="divinfo">
                 <input {...register("book")} defaultValue={book.id} style={{ display: "none" }} />
                 <input {...register("book_title")} defaultValue={book.title} style={{ display: "none" }} />
+                <input {...register("owner")} defaultValue={user.id} style={{ display: "none" }} />
                 <p id="ptitlebook">{book.title}</p>
                 <p id="pgenrebook">{book.genre}, {book.date}</p>
                 <p id="pauthorbook">{book.author}</p>

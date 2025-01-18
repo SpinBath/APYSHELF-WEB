@@ -224,8 +224,8 @@ export function AccoutInfo() {
                 <p id="pUserEmail">{user.email}</p>
                 <p id="pUserNationalId">DNI: {user.national_id}</p>
                 <p id="pUserPhone">TLF: {user.phone}</p>
-                <p id="pUserAddress">ADR: </p>
-            </div>
+{/*                 <p id="pUserAddress">ADR: </p>
+ */}            </div>
         </div>
 
 
@@ -356,7 +356,7 @@ export function EditAccoutInfo() {
                 </div>
 
                 <button id="btn-editProfile" type="submit"> Apply </button><br />
-                <button id="btn-back"> Back </button>
+                <Link to="/account"><button id="btn-back" type='button'> Back </button></Link>
 
 
             </form>

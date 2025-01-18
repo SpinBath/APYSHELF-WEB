@@ -2,9 +2,6 @@
     width: 100%;
     height: 50px;
     border-bottom: 1px solid #162c34;
-    border-top: 1px solid #162c34;
-
-    
 }
 
 #loan-info {
@@ -15,7 +12,8 @@
     gap: 10px;
 }
 
-#p-loan, #p-loan-dates{
+#p-loan,
+#p-loan-dates {
     color: #162c34;
     font-weight: 600;
 }
@@ -29,7 +27,7 @@
     align-content: center;
 }
 
-.LoanCard button{
+.LoanCard button {
     background-color: #ffffff;
     border: 3px solid #162c34;
     border-radius: 7px;
@@ -37,8 +35,7 @@
     transition: ease 0.2s;
 }
 
-.LoanCard button:hover{
+.LoanCard button:hover {
     background-color: #ff3c3c;
     font-size: 23px;
 }
-   

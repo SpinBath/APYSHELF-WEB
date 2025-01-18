@@ -7,7 +7,7 @@ import "./styles/LoanList.css"
 
 export function LoanList() {
 
-    const [loans, setLoan] = useState([]);
+    const [loans, setLoans] = useState([]);
     const [user, setUsers] = useState(null);
 
     useEffect(() => {
@@ -25,19 +25,33 @@ export function LoanList() {
 
             async function loadLoans() {
                 const res = await getLoans(user.id);
-                setLoan(res.data.results);
+                setLoans(res.data.results);
             }
             loadLoans();
+            console.log(loans.length)
         }
     }, [user]);
 
     return (
         <div className="loanList">
-
-            {loans.map((loan) => (
-                <LoanCard key={loan.id} loan={loan} />
-            ))}
-
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Loan Dates</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loans.length === 0 ? (
+                        <p>No loans available</p>
+                    ) : (
+                        loans.map((loan) => (
+                            <LoanCard key={loan.id} loan={loan} />
+                        ))
+                    )}
+                </tbody>
+            </table>
         </div>
     )
 }

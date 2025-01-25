@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../AuthContext';
 import { createUser, loginUser, infoUser, editUser } from '../api/user.api'
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import "./styles/UserInfoEdit.css"
 import "./styles/UserInfo.css"
@@ -187,7 +187,39 @@ export function AccoutInfo() {
 
     const navigate = useNavigate();
     const [user, setUsers] = useState([]);
+
+    const fileInputRef = useRef(null);
+
     const { logout } = useAuth();
+
+
+
+    const handleDivClick = () => {
+        fileInputRef.current.click();
+    };
+
+    const handleFileChange = async (event) => {
+
+
+        if (event.target.files.length > 0) {
+            const file = event.target.files[0]
+            const maxSizeInBytes = 2 * 1024 * 1024; // 2 MB
+
+            if (file && file.size < maxSizeInBytes) {
+                const data = new FormData();
+                data.append("profile_image", file);
+                const ed = await editUser(user.id, data);
+
+                if (ed.status === 200) {
+                    navigate("/account")
+                }
+            } else {
+                console.log("Image Size: ", file.size)
+            }
+
+        }
+    };
+
 
     const handleLogout = () => {
         logout();
@@ -198,6 +230,7 @@ export function AccoutInfo() {
 
         async function loadUser() {
             const user = await infoUser(localStorage.getItem('token'));
+            console.log(user.data.profile_image)
             setUsers(user.data)
         }
 
@@ -205,15 +238,19 @@ export function AccoutInfo() {
 
     }, []);
 
-
-
+    const changueProfileImage = () => {
+        console.log("asd")
+    }
 
     return (
 
         <div id="userInfo" user={user}>
             <div id="divUserImage">
                 <div id="divinfo">
-                    <img id="imgUserPhoto">{user.photo}</img><br />
+                    <img src={`http://127.0.0.1:8000/media/${user.profile_image}`} id="imgUserPhoto" onClick={changueProfileImage} />
+                    <div id="div-image" onClick={handleDivClick}><input type='file' accept="image/png, image/jpeg, image/svg+xml" ref={fileInputRef} onChange={handleFileChange} /></div>
+
+                    <br />
                     <Link to="/editaccount"><button id="btnEditProfile">EDIT PROFILE</button> </Link><br />
                     <button id="btnLogout" onClick={handleLogout} >logout</button><br />
                 </div>
@@ -224,13 +261,14 @@ export function AccoutInfo() {
                 <p id="pUserEmail">{user.email}</p>
                 <p id="pUserNationalId">DNI: {user.national_id}</p>
                 <p id="pUserPhone">TLF: {user.phone}</p>
-{/*                 <p id="pUserAddress">ADR: </p>
- */}            </div>
+            </div>
         </div>
 
 
     );
 }
+
+
 
 export function EditAccoutInfo() {
 
@@ -268,7 +306,6 @@ export function EditAccoutInfo() {
 
             const updatedData = { ...data };
             const ed = await editUser(user.id, updatedData);
-
             if (ed.status === 200) {
                 navigate("/account")
             }
@@ -357,14 +394,8 @@ export function EditAccoutInfo() {
 
                 <button id="btn-editProfile" type="submit"> Apply </button><br />
                 <Link to="/account"><button id="btn-back" type='button'> Back </button></Link>
-
-
             </form>
-
         </div>
-
-
-
     );
 }
 

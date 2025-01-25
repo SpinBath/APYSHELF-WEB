@@ -24,5 +24,10 @@ export const infoUser = (token) => {
 };
 
 export const editUser = (id, data) => {
-    return apiClient.patch(`/api/users/${id}/`, data);
+    return apiClient.patch(`/api/users/${id}/`, data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        }
+    });
+    
 };

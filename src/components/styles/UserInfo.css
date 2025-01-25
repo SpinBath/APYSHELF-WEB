@@ -13,6 +13,7 @@
 
 #divUserImage {
     text-align: center;
+    padding-left: 50px;
 }
 
 #divUserInfo {
@@ -21,12 +22,48 @@
 }
 
 #imgUserPhoto {
+    position: relative;
     width: 200px;
     height: 200px;
     margin-bottom: 10px;
     background-color: #162c34;
     border-radius: 150px;
 }
+
+#divUserImage {
+    position: relative;
+    width: 200px;
+}
+
+#div-image {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 150px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#div-image:hover {
+    
+    background-color: white;
+    border: 10px solid black;
+
+
+}
+
+#div-image input{
+    visibility: hidden;
+    /* width: 100%;
+    height: 100%;
+    border-radius: 150px;
+    background: transparent;
+    border: 0; */
+    
+}
+
 
 #btnEditProfile {
     background-color: #162c34;
@@ -63,5 +100,3 @@
 #pUserPhone {
     line-height: 30px;
 }
-
-

@@ -10,7 +10,7 @@ export function BookList() {
 
     const [books, setBooks] = useState([]);
     const [isActive, setIsActive] = useState(false);
-    const { register, handleSubmit, watch } = useForm()
+    const { register, watch } = useForm();
 
     const search = watch("search");
 

@@ -61,3 +61,39 @@
     transition: left 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+
+table {
+    margin: auto;
+    width: 800px;
+    position: relative;
+}
+
+th {
+    padding: 5px;
+    color: #fff;
+    background-color: #162c34;
+}
+
+#btn-createBook {
+    position: absolute;
+    right: -40px;
+    top: 4px;
+    height: 30px;
+    width: 30px;
+    background-color: #162c34;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    transition: 0.1s ease;
+}
+
+#btn-createBook:hover{
+    border: 3px solid #162c34;
+    font-weight: bolder;
+    background-color: #fff;
+    color: #162c34;
+    scale: 110%;
+}
+
+

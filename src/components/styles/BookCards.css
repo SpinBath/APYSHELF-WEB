@@ -29,8 +29,6 @@
     padding-left: 30px;
 }
 
-
-
 #bookCard #ptitlebook {
     color: #162c34;
     font-size: 35px;
@@ -53,7 +51,6 @@
     font-style: italic;
     margin-top: 10px;
     padding-right: 20px;
-
 }
 
 #bookCard #divInfoBookCard a {
@@ -61,7 +58,7 @@
     margin-right: 30px;
 }
 
-#bookCard #divInfoBookCard button {
+#btn-RequestLoan {
 
     background-color: #162c34;
     color: white;
@@ -70,17 +67,13 @@
     margin-right: 30px;
     transition: ease-in 0.1s;
     cursor: pointer;
-
 }
 
-
-#bookCard #divInfoBookCard button:hover {
-
+#btn-RequestLoan:hover {
     background-color: white;
     color: #162c34;
     border-width: 4px;
     transform: scale(104%);
-
 }
 
 #bookCard a {
@@ -110,4 +103,41 @@
     width: 10px;
     height: 10px;
     background-color: #00ff88;
+}
+
+#bookCardAdmin {
+    width: 100%;
+}
+
+td {
+    border: 1px solid #ddd;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+
+#td-date {
+    text-align: center;
+}
+
+#td-status {
+    text-align: center;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+#btn-edit,
+#btn-erase {
+    background: 0.0;
+
+    border: 1px;
+    width: 50%;
+    transition: 0.1s ease;
+}
+
+#btn-edit:hover,
+#btn-erase:hover {
+    scale: 140%;
 }

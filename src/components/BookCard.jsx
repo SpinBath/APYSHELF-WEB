@@ -7,29 +7,31 @@ import { getBook, editBook, deleteBook } from '../api/books.api'
 import { createLoan } from "../api/loans.api"
 
 import "./styles/BookCards.css"
+import "./styles/BookForms.css"
+
 
 
 export function BookCardAdmin({ book }) {
 
-    const navigate = useNavigate();
+    const onDelete = async () => {
+
+        const accepted = window.confirm('are you sure?')
+
+        if (accepted) {
+            await deleteBook(book.id);
+            window.location.reload();
+        }
+
+    }
 
     return (
-        <div style={{ background: "black" }}>
-            <h1>{book.title}</h1>
-            <h2>{book.author}</h2>
-            <button
-                onClick={async () => {
-                    const accepted = window.confirm('are you sure?')
-                    if (accepted) {
-                        await deleteBook(book.id);
-                        navigate("/");
-                    }
-                }}
-            >
-                Delete
-            </button>
-            <hr />
-        </div >
+        <tr id="bookCardAdmin">
+            <td id="td-title">{book.title}</td>
+            <td id="td-author">{book.author}</td>
+            <td id="td-date">{book.date}</td>
+            <td id="td-status">{book.status}</td>
+            <td id="td-genre"><Link to="/books-edit"><button id="btn-edit">🔧</button></Link><button id="btn-erase" onClick={onDelete}>🗑️</button></td>
+        </tr>
     );
 }
 
@@ -50,7 +52,7 @@ export function BookCard({ book }) {
                     <p id="pdescriptionbook">{book.description}</p>
                 </div>
                 <div id="divbutton">
-                    <Link to={`/books-request/${book.id}`}><button>Request loan</button></Link>{book.status} <div id="icon"
+                    <Link to={`/books-request/${book.id}`}><button id="btn-RequestLoan">Request loan</button></Link>{book.status}<div id="icon"
                         style={{
                             backgroundColor:
                                 book.status === "Available"
@@ -173,3 +175,80 @@ export function BookCardRequest() {
         </form>
     );
 }
+
+
+export function AddBookForm() {
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Datos del libro: ", data);
+    };
+
+    return (
+        <div id="bookForm">
+            <h1>Crear Libro</h1>
+            <form onSubmit={handleSubmit(onSubmit)}>
+
+                <div className="div-inputs">
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Título del libro"
+                        {...register("title", { required: "El título es obligatorio", maxLength: 200 })}
+                        required
+                    />
+                    {errors.title && <p>{errors.title.message}</p>}
+                </div>
+
+                <div className="div-inputs">
+                    <input
+                        type="text"
+                        id="author"
+                        placeholder="Nombre del autor"
+                        {...register("author", { required: "El autor es obligatorio", maxLength: 100 })}
+                        required
+                    />
+                    {errors.author && <p>{errors.author.message}</p>}
+                </div>
+
+                <div className="div-inputs-date">
+                    <p>Fecha de publicacion: </p>
+                    <input
+                        type="date"
+                        id="date"
+                        {...register("date", { required: "La fecha es obligatoria" })}
+                        required
+                    />
+                    {errors.date && <p>{errors.date.message}</p>}
+                </div>
+
+                <div className="div-inputs">
+                    <input
+                        type="text"
+                        id="genre"
+                        placeholder="Género literario"
+                        {...register("genre", { required: "El género es obligatorio", maxLength: 50 })}
+                        required
+                    />
+                    {errors.genre && <p>{errors.genre.message}</p>}
+                </div>
+
+                <div className="div-inputs">
+                    <textarea
+                        id="description"
+                        placeholder="Descripción del libro (máx. 300 caracteres)"
+                        {...register("description", { maxLength: 300 })}
+                    ></textarea>
+                    {errors.description && <p>{errors.description.message}</p>}
+                </div>
+
+              
+
+                <Link to="/books"><button id="btn-back" type="button">Back</button></Link>
+                <button id="btn-create" type="submit">Create Book</button>
+
+            </form>
+        </div>
+    );
+};

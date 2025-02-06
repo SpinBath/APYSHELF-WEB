@@ -93,7 +93,6 @@ export function BookList() {
                 <table>
                     <thead>
                         <Link to="/books-create"><button id="btn-createBook">+</button></Link>
-
                         <tr>
                             <th id="th-title">Title</th>
                             <th id="th-author">Author</th>
@@ -101,16 +100,16 @@ export function BookList() {
                             <th id="th-status">Status</th>
                             <th id="th-options">Options</th>
                         </tr>
-
                     </thead>
                     <tbody>
+                        <tr>
+                            <td></td>
+                        </tr>
                         {books.map((book) => (
                             <BookCardAdmin key={book.id} book={book} />
                         ))}
                     </tbody>
                 </table>
-
-
             </div>
         )
     }

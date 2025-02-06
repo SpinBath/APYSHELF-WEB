@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useState, useEffect } from 'react';
 
 import { infoUser } from "../api/user.api";
-import { getBook, editBook, deleteBook } from '../api/books.api'
+import { createBooks, getBook, editBook, deleteBook } from '../api/books.api'
 import { createLoan } from "../api/loans.api"
 
 import "./styles/BookCards.css"
@@ -25,13 +25,15 @@ export function BookCardAdmin({ book }) {
     }
 
     return (
+
         <tr id="bookCardAdmin">
             <td id="td-title">{book.title}</td>
             <td id="td-author">{book.author}</td>
             <td id="td-date">{book.date}</td>
             <td id="td-status">{book.status}</td>
-            <td id="td-genre"><Link to="/books-edit"><button id="btn-edit">🔧</button></Link><button id="btn-erase" onClick={onDelete}>🗑️</button></td>
+            <td id="td-genre"><Link to={`/books-edit/${book.id}`}><button id="btn-edit">🔧</button></Link><button id="btn-erase" onClick={onDelete}>🗑️</button></td>
         </tr>
+
     );
 }
 
@@ -179,15 +181,24 @@ export function BookCardRequest() {
 
 export function AddBookForm() {
 
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+
+    const onSubmit = async (data) => {
         console.log("Datos del libro: ", data);
+        const res = await createBooks(data)
+
+        if (res.status === 201) {
+            navigate("/books")
+        } else {
+            console.log(res)
+        }
     };
 
     return (
         <div id="bookForm">
-            <h1>Crear Libro</h1>
+            <h1>Create Book</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div className="div-inputs">
@@ -243,7 +254,7 @@ export function AddBookForm() {
                     {errors.description && <p>{errors.description.message}</p>}
                 </div>
 
-              
+
 
                 <Link to="/books"><button id="btn-back" type="button">Back</button></Link>
                 <button id="btn-create" type="submit">Create Book</button>
@@ -252,3 +263,131 @@ export function AddBookForm() {
         </div>
     );
 };
+
+export function EditBookForm() {
+
+    const navigate = useNavigate();
+
+    const { id } = useParams();
+    const [book, setBook] = useState(null);
+
+    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+
+    useEffect(() => {
+        const fetchBook = async () => {
+            try {
+                const res = await getBook(id);
+                setBook(res.data);
+            } catch (error) {
+                console.error("Error fetching the book:", error);
+            }
+        };
+
+        if (id) fetchBook();
+    }, [id]);
+
+    const onSubmit = handleSubmit(async (data) => {
+
+        try {
+
+            const updatedData = { ...data };
+            const ed = await editBook(book.id, updatedData);
+            if (ed.status === 200) {
+                navigate("/books")
+            }
+
+        } catch (error) {
+
+            if (error.response) {
+
+                if (error.response.status === 404) {
+                    console.error('La ruta no fue encontrada (404).');
+                }
+
+            } else if (error.request) {
+                console.error('No se recibió respuesta del servidor:', error.request);
+
+            } else {
+                console.error('Error al configurar la solicitud:', error.message);
+            }
+
+        }
+
+    });
+
+    return (
+        <div id="bookForm">
+            <h1>Edit Book</h1>
+            {book ? (
+                <form onSubmit={onSubmit} book={book}>
+
+                    <div className="div-inputs">
+                        <input
+                            type="text"
+                            id="title"
+                            placeholder={book.title}
+                            defaultValue={book.title || ""}
+                            {...register("title", { required: "El título es obligatorio", maxLength: 200 })}
+                            required
+                        />
+                        {errors.title && <p>{errors.title.message}</p>}
+                    </div>
+
+                    <div className="div-inputs">
+                        <input
+                            type="text"
+                            id="author"
+                            placeholder="Nombre del autor"
+                            defaultValue={book.author || ""}
+                            {...register("author", { required: "El autor es obligatorio", maxLength: 100 })}
+                            required
+                        />
+                        {errors.author && <p>{errors.author.message}</p>}
+                    </div>
+
+                    <div className="div-inputs-date">
+                        <p>Fecha de publicacion: </p>
+                        <input
+                            type="date"
+                            id="date"
+                            defaultValue={book.date || ""}
+                            {...register("date", { required: "La fecha es obligatoria" })}
+                            required
+                        />
+                        {errors.date && <p>{errors.date.message}</p>}
+                    </div>
+
+                    <div className="div-inputs">
+                        <input
+                            type="text"
+                            id="genre"
+                            placeholder="Género literario"
+                            defaultValue={book.genre || ""}
+                            {...register("genre", { required: "El género es obligatorio", maxLength: 50 })}
+                            required
+                        />
+                        {errors.genre && <p>{errors.genre.message}</p>}
+                    </div>
+
+                    <div className="div-inputs">
+                        <textarea
+                            id="description"
+                            placeholder="Descripción del libro (máx. 300 caracteres)"
+                            defaultValue={book.description || ""}
+                            {...register("description", { maxLength: 300 })}
+                        ></textarea>
+                        {errors.description && <p>{errors.description.message}</p>}
+                    </div>
+
+
+
+                    <Link to="/books"><button id="btn-back" type="button">Back</button></Link>
+                    <button id="btn-create" type="submit">Edit Book</button>
+
+                </form>
+            ) : (
+                <p>Loading book details...</p>
+            )}
+        </div>
+    )
+}

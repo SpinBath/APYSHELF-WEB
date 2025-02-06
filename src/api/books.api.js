@@ -28,8 +28,8 @@ export const editBook = (id, data) => {
     return booksApi.patch(`/${id}/`, data);
 }
 
-export const createBooks = (books) => {
-    return booksApi.post('/', books)
+export const createBooks = (data) => {
+    return booksApi.post('/', data)
 }
 
 export const deleteBook = (id) => {

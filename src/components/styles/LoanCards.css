@@ -4,7 +4,7 @@
     border-bottom: 1px solid #162c34;
 }
 
-#loan-info {
+.LoanCard #loan-info {
     height: 100%;
     display: grid;
     align-items: center;
@@ -12,13 +12,13 @@
     gap: 10px;
 }
 
-#p-loan,
-#p-loan-dates {
+.LoanCard #p-loan,
+.LoanCard #p-loan-dates {
     color: #162c34;
     font-weight: 600;
 }
 
-#p-loan-status {
+.LoanCard #p-loan-status {
     background-color: #162c34;
     border-radius: 7px;
     height: 90%;
@@ -38,4 +38,40 @@
 .LoanCard button:hover {
     background-color: #ff3c3c;
     font-size: 23px;
+}
+
+
+
+
+
+.LoanCardAdmin {
+    width: 100%;
+    height: 100%;
+}
+
+.LoanCardAdmin td {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.LoanCardAdmin #td-title {
+    text-align: center;
+}
+
+.LoanCardAdmin #td-date {}
+
+.LoanCardAdmin #td-status {}
+
+.LoanCardAdmin #td-options {}
+
+.LoanCardAdmin button {
+    background: 0.0;
+    border: 1px;
+    width: 30px;
+    height: 30px;
+    transition: 0.1s ease;
+}
+
+.LoanCardAdmin button:hover {
+    scale: 140%;
 }

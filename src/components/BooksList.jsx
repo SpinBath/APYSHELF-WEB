@@ -102,9 +102,6 @@ export function BookList() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                        </tr>
                         {books.map((book) => (
                             <BookCardAdmin key={book.id} book={book} />
                         ))}

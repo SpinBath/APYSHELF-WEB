@@ -15,6 +15,10 @@ export const loginUser = (user) => {
     return apiClient.post('/login', user);
 };
 
+export const getUser = (id) => {
+    return apiClient.get(`/api/users/${id}/`);
+};
+
 export const infoUser = (token) => {
     return apiClient.get('/test_token', {
         headers: {

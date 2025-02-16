@@ -12,6 +12,10 @@ export const getAllLoans = () => {
     return booksApi.get('/')
 }
 
+export const editLoan = (id, data) => {
+    return booksApi.patch(`/${id}/`, data);
+}
+
 export const createLoan = (loans) => {
     return booksApi.post('/', loans)
 }

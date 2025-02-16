@@ -2,13 +2,13 @@
     padding-top: 100px;
 }
 
-#titleBookList {
+.bookList #titleBookList {
     text-align: center;
     font-style: italic;
 
 }
 
-.divSearchBooks {
+.bookList .divSearchBooks {
     margin: 30px auto;
     width: 900px;
     display: flex;
@@ -17,7 +17,7 @@
 
 }
 
-.divSearchBooks input {
+.bookList .divSearchBooks input {
     margin-right: 30px;
     padding: 0px 10px;
     height: 30px;
@@ -26,8 +26,7 @@
 }
 
 
-.toggle-container {
-
+.bookList .toggle-container {
 
     border: #162c34 4px solid;
     position: relative;
@@ -42,15 +41,15 @@
 }
 
 
-.toggle-container.active {
+.bookList .toggle-container.active {
     background-color: #4caf50;
 }
 
-.toggle-container.active .toggle-knob {
+.bookList .toggle-container.active .toggle-knob {
     left: 38px;
 }
 
-.toggle-knob {
+.bookList .toggle-knob {
     position: absolute;
     top: 0px;
     left: 2px;
@@ -63,19 +62,19 @@
 }
 
 
-table {
+.bookList table {
     margin: auto;
     width: 800px;
     position: relative;
 }
 
-th {
+.bookList th {
     padding: 5px;
     color: #fff;
     background-color: #162c34;
 }
 
-#btn-createBook {
+.bookList #btn-createBook {
     position: absolute;
     right: -40px;
     top: 4px;
@@ -88,12 +87,10 @@ th {
     transition: 0.1s ease;
 }
 
-#btn-createBook:hover{
+.bookList #btn-createBook:hover {
     border: 3px solid #162c34;
     font-weight: bolder;
     background-color: #fff;
     color: #162c34;
     scale: 110%;
 }
-
-

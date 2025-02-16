@@ -41,7 +41,7 @@ export function SinginPanel() {
 
             if (axios.isAxiosError(error)) {
                 console.error('Error en Axios:', error.message);
-                console.error('Código de estado:', error.response?.status); // 404
+                console.error('Código de estado:', error.response?.status);
                 console.error('URL:', error.config.url);
             } else {
                 console.error('Error desconocido:', error);

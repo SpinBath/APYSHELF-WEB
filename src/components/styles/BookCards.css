@@ -69,6 +69,15 @@
     cursor: pointer;
 }
 
+#btn-RequestLoan[disabled] {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #ddd;
+    color: #aaa;
+    width: 65%;
+    margin-right: 30px;
+}
+
 #btn-RequestLoan:hover {
     background-color: white;
     color: #162c34;
@@ -109,35 +118,34 @@
     width: 100%;
 }
 
-td {
+#bookCardAdmin td {
     border: 1px solid #ddd;
     padding-left: 15px;
     padding-right: 15px;
 
 }
 
-#td-date {
+#bookCardAdmin #td-date {
     text-align: center;
 }
 
-#td-status {
+#bookCardAdmin #td-status {
     text-align: center;
 }
 
-tr:hover {
+#bookCardAdmin tr:hover {
     background-color: #f1f1f1;
 }
 
-#btn-edit,
+#bookCardAdmin #btn-edit,
 #btn-erase {
     background: 0.0;
-
     border: 1px;
     width: 50%;
     transition: 0.1s ease;
 }
 
-#btn-edit:hover,
+#bookCardAdmin #btn-edit:hover,
 #btn-erase:hover {
     scale: 140%;
 }

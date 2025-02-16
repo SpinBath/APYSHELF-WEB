@@ -54,18 +54,48 @@ export function BookCard({ book }) {
                     <p id="pdescriptionbook">{book.description}</p>
                 </div>
                 <div id="divbutton">
-                    <Link to={`/books-request/${book.id}`}><button id="btn-RequestLoan">Request loan</button></Link>{book.status}<div id="icon"
+                    {book.status === "Available" ? (
+                        <Link to={`/books-request/${book.id}`}>
+                            <button id="btn-RequestLoan">Request loan</button>
+                        </Link>
+                    ) : (
+                        <button id="btn-RequestLoan" disabled>Request loan</button>
+                    )}
+                    {book.status}
+                    <div
+                        id="icon"
                         style={{
                             backgroundColor:
                                 book.status === "Available"
                                     ? "#4caf50"
-                                    : book.status === "On Hold"
-                                        ? "orange"
-                                        : book.status === "Not Available"
-                                            ? "#ff3c3c"
-                                            : "grey"
-                        }} />
+                                    : book.status === "Not Available"
+                                        ? "#ff3c3c"
+                                        : "grey"
+                        }}
+                    />
                 </div>
+
+
+                {/* {book.status === "Available" ? (
+                    <Link to={`/books-request/${book.id}`}>
+                        <button id="btn-RequestLoan">Request loan</button>
+                    </Link>
+                ) : (
+                    <button id="btn-RequestLoan" disabled>Request loan</button>
+                )}
+                <div id="divbutton">
+                    <Link to={`/books-request/${book.id}`}>
+                        <button id="btn-RequestLoan" disabled={book.status !== "Available"}>Request loan</button>
+                    </Link>{book.status}<div id="icon"
+                        style={{
+                            backgroundColor:
+                                book.status === "Available"
+                                    ? "#4caf50"
+                                    : book.status === "Not Available"
+                                        ? "#ff3c3c"
+                                        : "grey"
+                        }} />
+                </div>  */}
             </div>
         </div >
     );
@@ -140,7 +170,7 @@ export function BookCardRequest() {
             if (res.status === 201) {
                 const updatedData = {
                     orders_count: counts,
-                    status: "On hold"
+                    status: "Not Available"
                 };
 
                 const ed = await editBook(book.id, updatedData);

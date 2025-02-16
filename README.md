@@ -6,9 +6,6 @@
 
 The application is a minimalistic web app built with Django REST framework and React, created for managing book loans in a library.
 
-> [!note]  
-> Project under development.
-
 <details>
    <summary><h2>Screenshots</h2></summary>
   <details>

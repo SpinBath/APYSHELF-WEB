@@ -35,6 +35,7 @@ The application is a minimalistic web app built with Django REST framework and R
   ![APYSHELF-WEB-BOOKS](https://github.com/XRayBinary/assets/blob/main/APYSHELF-BOOKS-ADMIN.PNG?raw=true)
   ![APYSHELF-WEB-BOOKS](https://github.com/XRayBinary/assets/blob/main/APYSHELF-CREATEBOOK.PNG?raw=true)
   ![APYSHELF-WEB-BOOKS](https://github.com/XRayBinary/assets/blob/main/APYSHELF-EDITBOOK.PNG?raw=true)
+  ![APYSHELF-WEB-BOOKS](https://github.com/XRayBinary/assets/blob/main/APYSHELF-LOANS-ADMIN.PNG?raw=true)
   
   
   </details>

@@ -1,6 +1,6 @@
 
 # ApyShelf WEB
-![APYSHELF-WEB-BannerImage](https://github.com/XRayBinary/assets/blob/main/APYSHELF-1280x640.png?raw=true)
+![APYSHELF-WEB-BannerImage](https://github.com/SpinBath/assets/blob/main/APYSHELF-Logo.png)
 
 # General info
 

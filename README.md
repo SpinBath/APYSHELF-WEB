@@ -4,7 +4,11 @@
 
 # General info
 
-The application is a minimalistic web app built with Django REST framework and React, created for managing book loans in a library.
+Library web application developed with Django REST Framework and React
+
+This application allows registered users to request book loans through a web browser, where they can easily browse the library’s available catalog.
+
+From the admin panel, administrators have access to advanced tools to manage both the books in the database and the loans made by users.
 
 <details>
    <summary><h2>Screenshots</h2></summary>
